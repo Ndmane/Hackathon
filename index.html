@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Город</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Основные стили */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, nav, main, footer {
+            width: 100%;
+            max-width: 800px; /* Устанавливаем одинаковую ширину для всех основных блоков */
+            margin: 0 auto; /* Центрируем */
+        }
+
+        header {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px;
+            background-color: #333;
+        }
+
+        nav button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        nav button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Стиль для контента */
+        .content {
+            display: none; /* Все секции скрыты по умолчанию */
+            padding: 20px;
+        }
+
+        .content.active {
+            display: block; /* Отображаем активную секцию */
+        }
+
+        /* Стиль для модального окна */
+        .modal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Стиль для отображения погоды */
+        #weather-info {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Стиль для всплывающего окна состояния погоды */
+        #popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: none; /* Скрыто по умолчанию */
+            z-index: 1001; /* Выше модального окна */
+        }
+
+        #popup p {
+            margin: 0;
+            color: white;
+        }
+
+        #popup button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            padding: 5px 10px;
+        }
+
+        #popup button:hover {
+            background-color: #c82333;
+        }
+
+        /* Стиль для плиточек событий */
+        .event-tile {
+            background-color: #444;
+            color: white;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .event-tile img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* Стиль для формы создания события */
+        #event-form {
+            display: none; /* Скрыто по умолчанию */
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin: 20px 0;
+        }
+
+        #event-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #event-form input[type="text"],
+        #event-form input[type="file"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #event-form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 10px 15px;
+        }
+
+        #event-form button:hover {
+            background-color: #0056b3;
+        }
+
+          /* Стиль для плиточек событий */
+          .feedback-tile {
+            background-color: #444;
+            color: white;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .feedback-tile img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* Стиль для формы создания события */
+        #feedback-form {
+            display: none; /* Скрыто по умолчанию */
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin: 20px 0;
+        }
+
+        #feedback-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #feedback-form input[type="text"],
+        #feedback-form input[type="file"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #feedback-form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 10px 15px;
+        }
+
+        #feedback-form button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Стиль для кнопок служб */
+        .service-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 10px 15px;
+            margin: 5px 0;
+            display: block;
+            text-align: left;
+            width: 100%; /* Занимает всю ширину */
+        }
+
+        .service-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Стиль для кнопки вызова */
+        .service-phone {
+            margin-left: 10px;
+            font-weight: normal;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <!-- Модальное окно для выбора города -->
+    <div id="city-modal" class="modal">
+        <div class="modal-content">
+            <h2>Введите ваш город</h2>
+            <input type="text" id="city-input" placeholder="Например, Москва">
+            <button onclick="setCity()">OK</button>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div id="content-blur">
+        <header>
+            <h1 onclick="showSection('home')">Мой город</h1>
+            <nav>
+                <button onclick="showSection('home')">Главная</button>
+                <button onclick="showSection('events')">События</button>
+                <button onclick="showSection('services')">Справочник услуг</button>
+                <button onclick="showSection('feedback')">Отзывы</button>
+                <button onclick="showSection('emergency')">Экстренная помощь</button>
+                <a id="map-link" href="#" target="_blank">
+                    <button>Карта</button>
+                </a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Главная страница -->
+            <section id="home" class="content active">
+                <h2>Добро пожаловать в ваш город</h2>
+                <p>Приложение «Мой Город» поможет вам легко и быстро получить доступ к информации о событиях, городских услугах и возможностях. Оставайтесь в курсе городских новостей и помогайте улучшать ваш город!</p>
+                <p>Выберите нужный раздел из меню, чтобы продолжить.</p>
+            </section>
+
+            <!-- Секция событий -->
+            <section id="events" class="content">
+                <h2>События</h2>
+                <button onclick="toggleEventForm()">Создать событие</button>
+                <div id="event-form">
+                    <label for="event-title">Название события:</label>
+                    <input type="text" id="event-title" placeholder="Введите название события" required>
+                    <label for="event-description">Описание события:</label>
+                    <input type="text" id="event-description" placeholder="Введите описание события" required>
+                    <label for="event-image">Изображение события:</label>
+                    <input type="file" id="event-image" accept="image/*" required>
+                    <button onclick="addEvent()">Добавить событие</button>
+                </div>
+                <div id="event-list"></div> <!-- Список событий -->
+            </section>
+
+            <!-- Справочник услуг -->
+            <section id="services" class="content">
+                <h2>Справочник услуг</h2>
+                <button class="service-button">Служба пожарной охраны <span class="service-phone">8-800-123-45-67</span></button>
+                <button class="service-button">Служба реагирования в чрезвычайных ситуациях <span class="service-phone">8-800-123-45-68</span></button>
+                <button class="service-button">Полиция <span class="service-phone">8-800-123-45-69</span></button>
+                <button class="service-button">Служба скорой медицинской помощи <span class="service-phone">8-800-123-45-70</span></button>
+                <button class="service-button">Аварийная служба газовой сети <span class="service-phone">8-800-123-45-71</span></button>
+            </section>
+            
+            <!-- Секция отзывов -->
+            <section id="feedback" class="content">
+                <h2>Отзывы</h2>
+                <button onclick="toggleFeedbackForm()">Создать отзыв</button>
+                <div id="feedback-form">
+                    <label for="feedback-title">Название отзыва:</label>
+                    <input type="text" id="feedback-title" placeholder="Введите название отзыва" required>
+                    <label for="feedback-description">Описание отзыва:</label>
+                    <input type="text" id="feedback-description" placeholder="Введите описание отзыва" required>
+                    <label for="feedback-image">Изображение отзыва:</label>
+                    <input type="file" id="feedback-image" accept="image/*" required>
+                    <button onclick="addFeedback()">Добавить отзыв</button>
+                </div>
+                <div id="feedback-list"></div> <!-- Список отзывов -->
+            </section>
+
+            <!-- Секция экстренной помощи -->
+            <section id="emergency" class="content">
+                <h2>Экстренная помощь</h2>
+                <p>Информация о экстренной помощи и контакты.</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Мой Город. Все права защищены.</p>
+        </footer>
+    </div>
+
+    <!-- Информация о погоде -->
+    <div id="weather-info">
+        <p>Температура: <span id="temperature"></span>°C</p>
+        <p>Скорость ветра: <span id="wind-speed"></span> м/с</p>
+    </div>
+
+    <!-- Всплывающее окно состояния погоды -->
+    <div id="popup">
+        <p id="weather-status">Состояние погоды: <span id="status"></span></p>
+        <button onclick="closePopup()">Закрыть</button>
+    </div>
+
+    <script>
+        let city; // Переменная для хранения названия города
+
+        // Функция для установки города
+        function setCity() {
+            city = document.getElementById('city-input').value;
+            document.getElementById('city-modal').style.display = 'none'; // Закрыть модальное окно
+            if (city) {
+                fetchWeather(city);
+            }
+        }
+
+        // Функция для установки города
+function setCity() {
+    city = document.getElementById('city-input').value;
+    document.getElementById('city-modal').style.display = 'none'; // Закрыть модальное окно
+    if (city) {
+        fetchWeather(city);
+        mapLink = `https://2gis.ru/search/${encodeURIComponent(city)}`; // Создаём ссылку на 2GIS
+        document.getElementById('map-link').href = mapLink; // Обновляем ссылку
+
+            }
+        }
+
+        // Функция для получения погоды
+        function fetchWeather(city) {
+            fetch(`https://api.open-meteo.com/v1/forecast?latitude=55.7558&longitude=37.6173&current_weather=true`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Ошибка сети");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const { temperature, windspeed } = data.current_weather;
+                    document.getElementById('temperature').textContent = temperature;
+                    document.getElementById('wind-speed').textContent = windspeed;
+                    checkWeatherConditions(temperature, windspeed); // Проверка состояния погоды
+                })
+                .catch(error => {
+                    console.error("Ошибка при загрузке данных о погоде:", error);
+                    alert("Произошла ошибка при загрузке данных о погоде: " + error.message);
+                });
+        }
+
+        // Функция для проверки состояния погоды
+        function checkWeatherConditions(temperature, windSpeed) {
+            let status;
+            if (temperature > 0 && windSpeed < 10) {
+                status = "Условия нормальные";
+            } else {
+                status = "Критические условия";
+            }
+            document.getElementById('status').textContent = status; // Обновляем статус
+            showPopup(status); // Показываем всплывающее окно
+        }
+
+        // Функция для отображения всплывающего окна состояния погоды
+        function showPopup(status) {
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('weather-status').textContent = `Состояние погоды: ${status}`; // Обновляем текст
+        }
+
+        // Функция для закрытия всплывающего окна
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        // Функция для показа выбранной секции
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content');
+            sections.forEach(section => section.classList.remove('active')); // Скрыть все секции
+            document.getElementById(sectionId).classList.add('active'); // Показать выбранную секцию
+        }
+
+        // Функция для показа/скрытия формы создания события
+        function toggleEventForm() {
+            const form = document.getElementById('event-form');
+            form.style.display = form.style.display === 'block' ? 'none' : 'block'; // Переключить видимость
+        }
+
+        // Функция для добавления события
+        function addEvent() {
+            const title = document.getElementById('event-title').value;
+            const description = document.getElementById('event-description').value;
+            const imageInput = document.getElementById('event-image');
+            const file = imageInput.files[0];
+
+            if (!title || !description || !file) {
+                alert("Пожалуйста, заполните все поля.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const eventList = document.getElementById('event-list');
+                const eventTile = document.createElement('div');
+                eventTile.classList.add('event-tile');
+                eventTile.innerHTML = `
+                    <img src="${event.target.result}" alt="${title}">
+                    <h3>${title}</h3>
+                    <p>${description}</p>
+                    <button onclick="deleteEvent(this)">Удалить пост</button>
+                `;
+                eventList.appendChild(eventTile); // Добавить плиточку события в список
+                clearEventForm(); // Очистить форму после добавления события
+            };
+            reader.readAsDataURL(file); // Чтение изображения
+
+            toggleEventForm(); // Скрыть форму после добавления события
+        }
+
+        // Функция для удаления события
+        function deleteEvent(button) {
+            const eventTile = button.parentElement; // Получаем родительский элемент (плиточка события)
+            eventTile.remove(); // Удаляем плиточку события
+        }
+
+        // Функция для очистки формы создания события
+        function clearEventForm() {
+            document.getElementById('event-title').value = '';
+            document.getElementById('event-description').value = '';
+            document.getElementById('event-image').value = '';
+        }
+
+        // Отзывы
+
+        // Функция для показа/скрытия формы создания события
+        function toggleFeedbackForm() {
+            const form = document.getElementById('feedback-form');
+            form.style.display = form.style.display === 'block' ? 'none' : 'block'; // Переключить видимость
+        }
+
+        // Функция для добавления события
+        function addFeedback() {
+            const title = document.getElementById('feedback-title').value;
+            const description = document.getElementById('feedback-description').value;
+            const imageInput = document.getElementById('feedback-image');
+            const file = imageInput.files[0];
+
+            if (!title || !description || !file) {
+                alert("Пожалуйста, заполните все поля.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(feedback) {
+                const feedbackList = document.getElementById('feedback-list');
+                const feedbackTile = document.createElement('div');
+                feedbackTile.classList.add('feedback-tile');
+                feedbackTile.innerHTML = `
+                    <img src="${feedback.target.result}" alt="${title}">
+                    <h3>${title}</h3>
+                    <p>${description}</p>
+                    <button onclick="deleteFeedback(this)">Удалить пост</button>
+                `;
+                feedbackList.appendChild(feedbackTile); // Добавить плиточку события в список
+                clearFeedbackForm(); // Очистить форму после добавления события
+            };
+            reader.readAsDataURL(file); // Чтение изображения
+
+            toggleFeedbackForm(); // Скрыть форму после добавления события
+        }
+
+        // Функция для удаления события
+        function deleteFeedback(button) {
+            const feedbackTile = button.parentElement; // Получаем родительский элемент (плиточка события)
+            feedbackTile.remove(); // Удаляем плиточку события
+        }
+
+        // Функция для очистки формы создания события
+        function clearFeedbackForm() {
+            document.getElementById('feedback-title').value = '';
+            document.getElementById('feedback-description').value = '';
+            document.getElementById('feedback-image').value = '';
+        }
+
+        // Запускаем модальное окно для выбора города и интервал для обновления погоды
+        window.onload = () => {
+            document.getElementById('city-modal').style.display = 'flex'; // Показываем модальное окно при загрузке страницы
+            startPopupInterval(); // Запускаем интервал для обновления погоды
+        };
+        
+    </script>
+</body>
+</html>
