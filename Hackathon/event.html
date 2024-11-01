@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>События - Мой Город</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <a href="index.html">← Назад</a>
+        <h1>События</h1>
+    </header>
+    <main>
+        <button id="add-event-button">Добавить событие</button> <!-- Кнопка добавления события -->
+        <div id="events-list"></div>
+    </main>
+
+    <!-- Модальное окно для добавления события -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2>Добавить событие</h2>
+            <label for="event-title">Заголовок:</label>
+            <input type="text" id="event-title">
+            <label for="event-description">Описание:</label>
+            <input type="text" id="event-description">
+            <button id="add-event-ok">OK</button>
+            <button id="close-modal">Отмена</button>
+        </div>
+    </div>
+
+    <script src="events.js"></script>
+</body>
+</html>

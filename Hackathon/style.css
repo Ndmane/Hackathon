@@ -1,0 +1,229 @@
+/* Основные стили для всего приложения */
+body {
+    font-family: 'Georgia', serif;
+    background: linear-gradient(to bottom, #000000, #4b4b4b); /* Градиент от черного к серому */
+    color: #f8f8f2; /* Цвет текста */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Заголовок и футер */
+header {
+    background-color: #222; /* Темный фон */
+    color: #ffffff; /* Белый текст */
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+    border-bottom: 5px solid #444; /* Темно-серый */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    
+}
+
+footer {
+    background-color: #222; /* Темный фон */
+    color: #ffffff; /* Белый текст */
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    padding: 1rem;
+    width: 90%; /* Задаем такую же ширину, как у main */
+    max-width: 756px; /* Ограничиваем ширину так же, как у main */
+    text-align: center;
+    border-bottom: 5px solid #444; /* Темно-серый */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    margin-top: 0 auto; /* Центрируем футер */
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    background: linear-gradient(to bottom, #000000, #4b4b4b); /* Градиент от черного к серому */
+    color: #f8f8f2; /* Цвет текста */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Элементы списка */
+.event-item, .service-item, .notification-item, .feedback-item {
+    background-color: #444; /* Темный фон для элементов списка */
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border-radius: 3px;
+    border: 1px solid #555; /* Темно-серый */
+    color: #ffffff; /* Белый текст */
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    transition: transform 0.2s; /* Анимация при наведении */
+}
+
+/* Навигационные ссылки */
+nav a, header a {
+    color: #ffffff; /* Белый текст */
+    margin: 0 1rem;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Легкая тень для текстов */
+}
+
+nav a:hover, header a:hover {
+    color: #ff6700; /* Яркий оранжевый для интерактивности */
+}
+
+/* Основная часть */
+main {
+    width: 90%;
+    max-width: 800px;
+    margin: 1rem 0;
+    background-color: #333; /* Темный фон */
+    padding: 1rem;
+    border: 3px solid #444; /* Темно-серый */
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Заголовок */
+h1 {
+    font-size: 3rem;
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    color: #a30000; /* Темно-красный текст */
+    background: linear-gradient(to right, #a30000, #ff4d4d); /* Градиент от темно-красного к светло-красному */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 0px #000; /* Тень для заголовка */
+}
+
+/* Кнопки */
+button {
+    background: linear-gradient(to right, #a30000, #ff4d4d); /* Градиент от темно-красного к светло-красному */
+    color: #ffffff; /* Белый текст */
+    border: 3px solid #a30000; /* Темно-красный */
+    padding: 10px 20px;
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+
+section {
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 1.1rem;
+}
+
+button:hover {
+    background: linear-gradient(to right, #ff4d4d, #ff0000); /* Градиент от светло-красного к яркому красному */
+    color: #222; /* Темный текст при наведении */
+}
+
+/* Элементы списка */
+.event-item, .service-item, .notification-item, .feedback-item {
+    background-color: #444; /* Темный фон для элементов списка */
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border-radius: 3px;
+    border: 1px solid #555; /* Темно-серый */
+    color: #ffffff; /* Белый текст */
+    transition: transform 0.2s; /* Анимация при наведении */
+}
+
+.event-item:hover, .service-item:hover, .notification-item:hover, .feedback-item:hover {
+    transform: scale(1.02); /* Увеличение при наведении */
+}
+
+/* Дополнительные мелкие стили */
+p, h1, h2 {
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    padding: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2.5rem; /* Уменьшаем размер заголовка на мобильных устройствах */
+        font-family: "Lato", sans-serif;
+        font-weight: 300;
+        font-style: normal;
+    }
+    button {
+        width: 100%; /* Кнопки занимают 100% ширины */
+        padding: 15px; /* Увеличиваем отступы для удобства */
+        font-size: 1rem; /* Уменьшаем размер шрифта для кнопок */
+        font-family: "Lato", sans-serif;
+        font-weight: 300;
+        font-style: normal;
+    }
+    main {
+        padding: 0.5rem; /* Уменьшаем отступы для основной части */
+    }
+}
+
+/* Стили для модального окна */
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный фон */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #333;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.modal-content input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #222;
+    color: #ffffff;
+} 
+
+с {
+    margin: auto    ;
+}
